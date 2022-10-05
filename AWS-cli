@@ -1,6 +1,6 @@
 Create a test ec2-instance running under a VPC network with 3 subnets under it, 1 subnet having public ip enabled option.
 
-Before that create a IAM user with full adminstrator previleages and configure it on your local machine.
+Before that create an IAM user with full adminstrator previleages and configure it on your local machine.
 
 AWS-CLi commands
 
