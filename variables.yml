@@ -1,5 +1,6 @@
 ---
 packages: 
   - "httpd"
-owner: "apache"
-group: "apache"  
+httpd_owner: "apache"
+httpd_group: "apache" 
+httpd_port: 8080  

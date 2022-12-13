@@ -15,12 +15,18 @@
       copy:
         content: "<h1><center> Amazon test page</center></h1>"
         dest: "/var/www/html/index.html"
-        owner: "{{ owner }}"
-        group: "{{ group }}"
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
+
+    - name: "creating httpd.conf from template"
+      template:
+        src: httpd.conf.tmpl
+        dest: /etc/httpd/conf/httpd.conf
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
 
     - name: "amazon - restarting apache"
       service:
         name: httpd
         state: restarted
-        enabled: true
-
+        enabled: true      
