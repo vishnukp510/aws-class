@@ -25,6 +25,20 @@
         owner: "{{ httpd_owner }}"
         group: "{{ httpd_group }}"
 
+    - name: "creating virtualhost config file {{ httpd_domain }} "
+      template:
+        src: virtualhost.conf.tmpl
+        dest: /etc/httpd/conf.d/default.conf
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
+    
+    - name: "creating Documentroot for the virtualhost {{ httpd_domain }}"
+      file:
+        path: "/var/www/html/{{httpd_domain}}"
+        state: directory
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
+
     - name: "amazon - restarting apache"
       service:
         name: httpd
