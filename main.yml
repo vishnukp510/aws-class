@@ -1,0 +1,26 @@
+---
+- name: "Wordpress installation"
+  hosts: all
+  become: true
+  vars_files:
+    - variables.yml
+  tasks:
+
+    - name: "amazon - installing apache"
+      yum: 
+        name: "{{ packages }}" 
+        state: present
+
+    - name: "amazon - creating index.html"
+      copy:
+      content: "<h1><center> Amazon test page</center></h1>"
+      dest: "/var/www/html/index.html"
+      owner: "{{ owner }}"
+      group: "{{ group }}"
+
+    - name: "amazon - restarting apache"
+      service:
+      name: httpd
+      state: restarted
+      enabled: true
+

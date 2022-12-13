@@ -1,0 +1,5 @@
+---
+packages: 
+  - "httpd"
+owner: "apache"
+group: "apache"  
