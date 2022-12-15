@@ -61,7 +61,7 @@
         - "httpd"
         - "php-fpm"
 
-    -- name: "mariadb package installation"
+    - name: "mariadb package installation"
       yum: 
         name: mariadb
         state: present
@@ -71,5 +71,47 @@
         name: mariadb
         state: restarted
         enabled: true
+   
+    - name: "mariadb - setting root password"
+      ignore_errors: true
+      mysql_user:
+        login_user: "root"
+        login_password: ""
+        user: "root"
+        password: "{{ mysql_root_password }}"  
+        host_all: true
+     
+    - name: "removing anonymous users"
+      mysql_user: 
+        login_user: "root"
+        login_password: "{{ mysql_root_password }}" 
+        user: ""
+        host_all: true
+        state: absent
+    
+    - name: "removing test database"
+      mysql_db:
+        login_user: "root"
+        login_password: "{{ mysql_root_password }}"
+        name: "test"
+        state: absent
 
+         
+    - name: "mariadb-server - create extra db {{ mysql_extra_db }} "
+      mysql_db:
+        login_user:  "root"
+        login_password: "{{ mysql_root_password }}"
+        name: "{{ mysql_extra_db}}"
+        state: present
+
+    - name: "mariadb-server - create extra user {{ mysql_extra_user }} "
+      mysql_user:
+        login_user:  "root"
+        login_password: "{{ mysql_root_password }}"
+        user: "{{ mysql_extra_user }}"
+        host: "%"
+        password: "{{ mysql_user_password }}"
+        priv: '{{ mysql_extra_db }}.*:ALL'
+        state: present  
+      
       
